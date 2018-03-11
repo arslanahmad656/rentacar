@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="32d30b0056c342ff88e9463161179d0f" Name="Diagram1">
+        <EntityTypeShape EntityType="RentACarModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.AspNetRole" Width="1.5" PointX="7.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.AspNetUser" Width="1.5" PointX="10" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.Booking" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.BookingRequest" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.GlobalData" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.Image" Width="1.5" PointX="0.75" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.Location" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.PaymentMethod" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.RequestStatu" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.Sublocation" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.sysdiagram" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.Vehicle" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.VehicleCategory" Width="1.5" PointX="1.5" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.VehicleImage" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.VehicleLocation" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.VehicleTransmission" Width="1.5" PointX="1.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentACarModel.VisitorQuery" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="RentACarModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_Booking_BookingRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_BookingRequest_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_BookingRequest_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_BookingRequest_RequestStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_BookingRequest_Sublocation" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_BookingRequest_Vehicle" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_VehicleImage_Image" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_VehicleLocation_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_Vehicle_VehicleCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_Vehicle_VehicleTransmission" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_VehicleImage_Vehicle" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.FK_VehicleLocation_Vehicle" ManuallyRouted="false" />
+        <AssociationConnector Association="RentACarModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
