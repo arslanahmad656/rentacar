@@ -99,7 +99,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Key" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Value" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -254,13 +254,13 @@
         </Association>
         <Association Name="FK_BookingRequest_Sublocation">
           <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="1" />
-          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="0..1" />
+          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sublocation">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BookingRequest">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="SubLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -595,7 +595,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Key" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -637,7 +637,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="BookingRequest" Relationship="Self.FK_BookingRequest_Sublocation" FromRole="Sublocation" ToRole="BookingRequest" />
+          <NavigationProperty Name="BookingRequests" Relationship="Self.FK_BookingRequest_Sublocation" FromRole="Sublocation" ToRole="BookingRequest" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -795,13 +795,13 @@
         </Association>
         <Association Name="FK_BookingRequest_Sublocation">
           <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="1" />
-          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="0..1" />
+          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sublocation">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BookingRequest">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="SubLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

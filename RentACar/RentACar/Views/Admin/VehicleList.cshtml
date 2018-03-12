@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RentACar.Models.Vehicle>
+
+@{
+    ViewBag.Title = "VehicleList";
+}
+
+<h2>VehicleList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateVehicle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fare1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fare2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fare3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleCategory.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleTransmission.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fare1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fare2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fare3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Make)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleCategory.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleTransmission.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditVehicle", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteVehicle", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

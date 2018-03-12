@@ -14,9 +14,16 @@ namespace RentACar.Models
     
     public partial class Sublocation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Sublocation()
+        {
+            this.BookingRequests = new HashSet<BookingRequest>();
+        }
+    
         public int Id { get; set; }
         public string Title { get; set; }
     
-        public virtual BookingRequest BookingRequest { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingRequest> BookingRequests { get; set; }
     }
 }

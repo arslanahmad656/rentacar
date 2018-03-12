@@ -1,0 +1,101 @@
+﻿@using RentACar.Models;
+@model VisitorQuery
+
+@{
+    ViewBag.Title = "VisitorQueryDetails";
+}
+
+<h2>VisitorQueryDetails</h2>
+
+<div>
+    <h4>VisitorQuery</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatePosted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatePosted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<p style="display: none" id="queryViewStatus">
+    @if(Model.Status == ApplicationWideData.VisitorQueryViewed)
+    {
+        <text>1</text>
+    }
+    else
+    {
+        <text>0</text>
+    }
+</p>
+
+@section Scripts{
+
+    <script>
+        (function changeVisitorQueryViewStatus() {
+            var status = $('#queryViewStatus').html().trim();
+            if (status === '0') {
+                $.ajax({
+                    url: '@Url.Action("EditVisitorQuery")',
+                    data: {
+                        'id': '@Model.Id'
+                    },
+                    type: 'GET',
+                    success: function (data) {
+                        console.log('View status has been changed');
+                        location.reload();
+                    }
+                });
+            }
+        })();
+    </script>
+
+}

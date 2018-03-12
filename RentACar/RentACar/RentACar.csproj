@@ -170,13 +170,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\GlobalDatasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationWideData.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -334,6 +337,33 @@
     <Content Include="Views\GlobalDatas\Details.cshtml" />
     <Content Include="Views\GlobalDatas\Edit.cshtml" />
     <Content Include="Views\GlobalDatas\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\CreateVehicleCategory.cshtml" />
+    <Content Include="Views\Admin\VehicleCategoryList.cshtml" />
+    <Content Include="Views\Admin\DeleteVehicleCategory.cshtml" />
+    <Content Include="Views\Admin\VehicleList.cshtml" />
+    <Content Include="Views\Admin\CreateVehicle.cshtml" />
+    <Content Include="Views\Admin\EditVehicle.cshtml" />
+    <Content Include="Views\Admin\DeleteVehicle.cshtml" />
+    <Content Include="Views\Admin\LocationList.cshtml" />
+    <Content Include="Views\Admin\CreateLocation.cshtml" />
+    <Content Include="Views\Admin\DeleteLocation.cshtml" />
+    <Content Include="Views\Admin\SublocationList.cshtml" />
+    <Content Include="Views\Admin\CreateSublocation.cshtml" />
+    <Content Include="Views\Admin\DeleteSublocation.cshtml" />
+    <Content Include="Views\Admin\PaymentMethodList.cshtml" />
+    <Content Include="Views\Admin\CreatePaymentMethod.cshtml" />
+    <Content Include="Views\Admin\DeletePaymentMethod.cshtml" />
+    <Content Include="Views\Visitor\BookingRequestList.cshtml" />
+    <Content Include="Views\Visitor\Index.cshtml" />
+    <Content Include="Views\Visitor\CreateBookingRequest.cshtml" />
+    <Content Include="Views\Admin\BookingList.cshtml" />
+    <Content Include="Views\Admin\CreateBooking.cshtml" />
+    <Content Include="Views\Admin\EditBooking.cshtml" />
+    <Content Include="Views\Visitor\CreateVisitorQuery.cshtml" />
+    <Content Include="Views\Admin\VisitorQueryList.cshtml" />
+    <Content Include="Views\Admin\VisitorQueryDetails.cshtml" />
+    <Content Include="Views\Admin\DeleteVisitorQuery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
