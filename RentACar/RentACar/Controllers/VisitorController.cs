@@ -35,6 +35,7 @@ namespace RentACar.Controllers
             ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title");
             ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title");
+            ViewBag.VehicleCategories = db.VehicleCategories.ToList();
 
             return View();
         }
@@ -75,6 +76,7 @@ namespace RentACar.Controllers
             ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title", model.PaymentMethodId);
             ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title", model.VehicleId);
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title", model.LocationId);
+            ViewBag.VehicleCategories = db.VehicleCategories.ToList();
             return View(model);
         }
 
@@ -120,6 +122,105 @@ namespace RentACar.Controllers
                 }
             }
             return View(model);
+        }
+
+        #endregion
+
+        #region FareCalculator
+
+        public ActionResult FareCalculator()
+        {
+            ViewBag.SubLocationId = new SelectList(db.Sublocations, "Id", "Title");
+            ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title");
+            ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title");
+            ViewBag.VehicleCategories = db.VehicleCategories.ToList();
+            return View();
+        }
+
+        public JsonResult GetFareEstimate(DateTime requestDate, DateTime returnDate, int vehicleId, bool withDriver)
+        {
+            try
+            {
+                var vehicle = db.Vehicles.Find(vehicleId);
+                if(vehicle == null)
+                {
+                    throw new Exception($"No vehicle found with id {vehicleId}");
+                }
+                if(requestDate > returnDate)
+                {
+                    throw new Exception("Request date must be earlier than return date.");
+                }
+                var numberOfDays = (returnDate - requestDate).Days + 1;
+                var fare = 0M;
+                if(numberOfDays <= ApplicationWideData.FareDaysStep1)
+                {
+                    fare = vehicle.Fare1 * numberOfDays;
+                }
+                else if(numberOfDays <= ApplicationWideData.FareDaysStep2)
+                {
+                    fare = vehicle.Fare2 * numberOfDays;
+                }
+                else
+                {
+                    fare = vehicle.Fare3 * numberOfDays;
+                }
+                if(withDriver)
+                {
+                    var driverCostStr = db.GlobalDatas.Where(gd => gd.Key.Equals(ApplicationWideData.DriverCostKey, StringComparison.OrdinalIgnoreCase)).Select(gd => gd.Value).First();
+                    var driverCost = Convert.ToDecimal(driverCostStr);
+                    fare = fare + driverCost * numberOfDays;
+                }
+                return Json(new
+                {
+                    status = "success",
+                    exceptionOccurred = false,
+                    noOfDays = numberOfDays,
+                    fare = fare
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    exceptionOccurred = true,
+                    exceptionMessage = ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
+
+        #region Others
+
+        public JsonResult GetVehiclesInCategory(int categoryId)
+        {
+            try
+            {
+                var category = db.VehicleCategories.Find(categoryId);
+                if(category == null)
+                {
+                    throw new Exception("Could not find the category.");
+                }
+                var vehicles = db.Vehicles.Where(v => v.CategoryId == categoryId).Select(v => new { id = v.Id, title = v.Title }).ToArray();
+                return Json(new
+                {
+                    status = "success",
+                    exceptionOccurred = false,
+                    vehicleCount = vehicles.GetLength(0),
+                    vehicles = vehicles
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    exceptionOccurred = true,
+                    exceptionMessage = ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion

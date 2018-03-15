@@ -71,7 +71,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BookingRequestId" Type="int" Nullable="false" />
+          <Property Name="BookingRequestId" Type="int" />
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BookingRequest">
@@ -82,16 +82,16 @@
           <Property Name="Name" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="512" Nullable="false" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
-          <Property Name="SubLocationId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
+          <Property Name="SubLocationId" Type="int" />
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="ReturnDate" Type="datetime" Nullable="false" />
-          <Property Name="VehicleId" Type="int" Nullable="false" />
+          <Property Name="VehicleId" Type="int" />
           <Property Name="WithDriver" Type="bit" Nullable="false" />
-          <Property Name="PaymentMethodId" Type="int" Nullable="false" />
+          <Property Name="PaymentMethodId" Type="int" />
           <Property Name="RequestInitiated" Type="datetime" Nullable="false" />
           <Property Name="RequestViewed" Type="datetime" />
-          <Property Name="RequestStatusId" Type="int" Nullable="false" />
+          <Property Name="RequestStatusId" Type="int" />
         </EntityType>
         <EntityType Name="GlobalData">
           <Key>
@@ -205,7 +205,7 @@
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Booking_BookingRequest">
-          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="1" />
+          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="0..1" />
           <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BookingRequest">
@@ -217,7 +217,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Location">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
@@ -229,7 +229,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_PaymentMethod">
-          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaymentMethod">
@@ -241,7 +241,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_RequestStatus">
-          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="1" />
+          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestStatus">
@@ -253,7 +253,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Sublocation">
-          <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="1" />
+          <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sublocation">
@@ -265,7 +265,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Vehicle">
-          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Vehicle">
@@ -560,7 +560,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BookingRequestId" Type="Int32" Nullable="false" />
+          <Property Name="BookingRequestId" Type="Int32" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BookingRequest" Relationship="Self.FK_Booking_BookingRequest" FromRole="Booking" ToRole="BookingRequest" />
         </EntityType>
@@ -572,16 +572,16 @@
           <Property Name="Name" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="SubLocationId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" />
+          <Property Name="SubLocationId" Type="Int32" />
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ReturnDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="VehicleId" Type="Int32" Nullable="false" />
+          <Property Name="VehicleId" Type="Int32" />
           <Property Name="WithDriver" Type="Boolean" Nullable="false" />
-          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethodId" Type="Int32" />
           <Property Name="RequestInitiated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RequestViewed" Type="DateTime" Precision="3" />
-          <Property Name="RequestStatusId" Type="Int32" Nullable="false" />
+          <Property Name="RequestStatusId" Type="Int32" />
           <NavigationProperty Name="Bookings" Relationship="Self.FK_Booking_BookingRequest" FromRole="BookingRequest" ToRole="Booking" />
           <NavigationProperty Name="Location" Relationship="Self.FK_BookingRequest_Location" FromRole="BookingRequest" ToRole="Location" />
           <NavigationProperty Name="PaymentMethod" Relationship="Self.FK_BookingRequest_PaymentMethod" FromRole="BookingRequest" ToRole="PaymentMethod" />
@@ -746,7 +746,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Booking_BookingRequest">
-          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="1" />
+          <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="0..1" />
           <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BookingRequest">
@@ -758,7 +758,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Location">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
@@ -770,7 +770,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_PaymentMethod">
-          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaymentMethod">
@@ -782,7 +782,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_RequestStatus">
-          <End Role="RequestStatus" Type="Self.RequestStatu" Multiplicity="1" />
+          <End Role="RequestStatus" Type="Self.RequestStatu" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestStatus">
@@ -794,7 +794,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Sublocation">
-          <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="1" />
+          <End Role="Sublocation" Type="Self.Sublocation" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sublocation">
@@ -806,7 +806,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookingRequest_Vehicle">
-          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
           <End Role="BookingRequest" Type="Self.BookingRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Vehicle">

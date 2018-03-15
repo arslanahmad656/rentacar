@@ -18,6 +18,7 @@ namespace RentACar
             AddDefaultRoleAndUser();
             AddDefaultVehicleTransmissions();
             AddDefaultRequestStatus();
+            AddDefaultDriverCost();
         }
 
         private void AddDefaultRoleAndUser()
@@ -113,6 +114,25 @@ namespace RentACar
                     }
                 };
                 requestStata.ForEach(rs => db.RequestStatus.Add(rs));
+                db.SaveChanges();
+            }
+        }
+
+        private void AddDefaultDriverCost()
+        {
+            var db = new Entities();
+            try
+            {
+                var driverCost = db.GlobalDatas.Where(gd => gd.Key.Equals(ApplicationWideData.DriverCostKey, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch(InvalidOperationException)
+            {
+                var driverCost = new GlobalData()
+                {
+                    Key = ApplicationWideData.DriverCostKey,
+                    Value = "3500"
+                };
+                db.GlobalDatas.Add(driverCost);
                 db.SaveChanges();
             }
         }

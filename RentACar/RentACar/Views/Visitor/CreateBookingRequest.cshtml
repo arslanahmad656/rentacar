@@ -5,6 +5,7 @@
     ViewBag.Title = "CreateBookingRequest";
     var errors = (List<string>)ViewBag.Errors;
     bool errorExists = errors != null;
+    var vehicleCategories = (List<VehicleCategory>)ViewBag.VehicleCategories;
 }
 
 <h2>CreateBookingRequest</h2>
@@ -91,6 +92,29 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Select Vehicle Type</label>
+            <div class="col-md-10">
+                <select class="form-control" id="vehicleCategory">
+                    @{ 
+                        bool first = true;
+                    }
+                    @foreach (var item in vehicleCategories)
+                    {
+                        if(first)
+                        {
+                            <option selected value="@item.Id">@item.Title</option>
+                            first = false;
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.VehicleId, "VehicleId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
@@ -127,3 +151,54 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+
+    <script>
+
+        (function removeAllCarsOnFirstLoad() {
+            $('#VehicleId').html('<option selected value>Select a category first</option>');
+        })();
+
+        (function selectCarsInCategory() {
+            function loadCars() {
+                var categoryId = Number($('#vehicleCategory').val().trim());
+                $.ajax({
+                    url: '@Url.Action("GetVehiclesInCategory")',
+                    data: {
+                        'categoryId': categoryId
+                    },
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        if (data['exceptionOccurred'] === false) {
+                            if (data['vehicleCount'] !== 0) {
+                                let html = '';
+                                let first = true;
+                                let vehicles = data['vehicles'];
+                                for (let vehicle of data['vehicles']) {
+                                    if (first) {
+                                        html += '<option selected value="' + vehicle['id'] + '">' + vehicle['title'] + '</option>';
+                                        first = false;
+                                    } else {
+                                        html += '<option value="' + vehicle['id'] + '">' + vehicle['title'] + '</option>';
+                                    }
+                                }
+                                $('#VehicleId').html(html);
+                            } else {
+                                $('#VehicleId').html('<option selected value>No vehicles found</option>');
+                            }
+                        } else {
+                            console.log('There was an error at server side during fetching the vehicles for the category.');
+                        }
+                    }
+                });
+            }
+
+            $('#vehicleCategory').change(loadCars);
+            loadCars(); // run this one time so that at first page load the vehicles are selected in the default selected category
+        })();
+
+    </script>
+
+}

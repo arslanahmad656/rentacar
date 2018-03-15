@@ -15,7 +15,7 @@ namespace RentACar.Models
     public partial class Booking
     {
         public int Id { get; set; }
-        public int BookingRequestId { get; set; }
+        public Nullable<int> BookingRequestId { get; set; }
         public bool Status { get; set; }
     
         public virtual BookingRequest BookingRequest { get; set; }

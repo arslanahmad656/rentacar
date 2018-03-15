@@ -12,6 +12,10 @@ namespace RentACar.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.IO;
+    using System.Web.Mvc;
+    using System.Web.Hosting;
     
     public partial class Entities : DbContext
     {
@@ -24,7 +28,31 @@ namespace RentACar.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
+        public override int SaveChanges()
+        {
+            //var vehicles = ChangeTracker.Entries().Where(e => e.Entity is Vehicle && e.State == EntityState.Deleted);
+            var vehicles = ChangeTracker.Entries().Where(e => e.Entity is Vehicle && e.State == EntityState.Deleted).ToList();
+            var vehiclesCasted = vehicles.Select(v => v.Entity as Vehicle).ToList();
+
+            foreach (var vehicle in vehiclesCasted)
+            {
+                var images = this.VehicleImages.Where(vi => vi.VehicleId == vehicle.Id).Select(vi => vi.Image).ToList();
+                foreach (var image in images)
+                {
+                    var rootPath = HostingEnvironment.MapPath(ApplicationWideData.StorageRootPath);
+                    var currentImagePath = Path.Combine(rootPath, image.Path);
+                    if (File.Exists(currentImagePath))
+                    {
+                        File.Delete(currentImagePath);
+                    }
+                }
+            }
+
+
+            return base.SaveChanges();
+        }
+
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }

@@ -68,6 +68,18 @@ namespace RentACar.Models
 
         public static string StorageRootPath => "~/uploads";
 
+        public static string DriverCostKey => "drivercost";
+
+        public static int VehicleModelLowerLimt => 1960;
+
+        public static int VehicleModelUpperLimt => DateTime.Now.Year;
+
+        public static int FareDaysStep1 => 3;
+
+        public static int FareDaysStep2 => 7;
+
+        public static int FareDaysStep3 => 14;
+
         #endregion
     }
 }

@@ -24,16 +24,16 @@ namespace RentACar.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int LocationId { get; set; }
-        public int SubLocationId { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public Nullable<int> SubLocationId { get; set; }
         public System.DateTime RequestDate { get; set; }
         public System.DateTime ReturnDate { get; set; }
-        public int VehicleId { get; set; }
+        public Nullable<int> VehicleId { get; set; }
         public bool WithDriver { get; set; }
-        public int PaymentMethodId { get; set; }
+        public Nullable<int> PaymentMethodId { get; set; }
         public System.DateTime RequestInitiated { get; set; }
         public Nullable<System.DateTime> RequestViewed { get; set; }
-        public int RequestStatusId { get; set; }
+        public Nullable<int> RequestStatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }

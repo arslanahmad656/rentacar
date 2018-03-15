@@ -100,6 +100,26 @@ namespace RentACar.Controllers
             {
                 try
                 {
+                    if(model.Fare1 >= model.Fare2)
+                    {
+                        throw new Exception("Fare 1 must be lesser than Fare 2");
+                    }
+                    if(model.Fare1 >= model.Fare3)
+                    {
+                        throw new Exception("Fare 1 must be lesser than Fare 3");
+                    }
+                    if (model.Fare2 >= model.Fare3)
+                    {
+                        throw new Exception("Fare 2 must be lesser than Fare 3");
+                    }
+                    if(model.Year < ApplicationWideData.VehicleModelLowerLimt)
+                    {
+                        throw new Exception($"Vehicle model must be at least {ApplicationWideData.VehicleModelLowerLimt}");
+                    }
+                    if (model.Year > ApplicationWideData.VehicleModelUpperLimt)
+                    {
+                        throw new Exception($"Vehicle model must be at max {ApplicationWideData.VehicleModelUpperLimt}");
+                    }
                     db.Vehicles.Add(model);
                     db.SaveChanges();
                     return RedirectToAction("VehicleList");
@@ -194,7 +214,12 @@ namespace RentACar.Controllers
         public ActionResult DeleteVehicleConfirmed(int id)
         {
             var model = db.Vehicles.Find(id);
-            db.Vehicles.Remove(model);
+            var images = db.VehicleImages.Where(vi => vi.VehicleId == model.Id).Select(vi => vi.Image).ToList();
+            //db.Vehicles.Remove(model);
+            db.Entry(model).State = EntityState.Deleted;
+            db.SaveChanges();
+            
+            images.ForEach(i => db.Images.Remove(i));
             db.SaveChanges();
             return RedirectToAction("VehicleList");
         }
