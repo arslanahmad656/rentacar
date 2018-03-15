@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "AddVehicleImage";
+}
+
+<h2>AddVehicleImage</h2>
+
+@Html.DropDownList("VehicleId", null, new { @class = "form-control" })
+<input id="images" type="file" multiple />
+<button id="upload">Upload images</button>
+
+@section Scripts{
+
+    <script>
+
+        function uploadImages() {
+            var images = $('#images').get(0).files;
+            var vehicleId = $('#VehicleId').val().trim();
+            var formData = new FormData();
+            formData.append("vehicleId", vehicleId);
+            for (let i = 0; i < images.length; i++) {
+                var img = images[i];
+                formData.append(img.name, img);
+            }
+            formData.append("imgCount", images.length);
+
+            $.ajax({
+                url: '@Url.Action("UploadVehicleImages")',
+                data: formData,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log('File(s) have been successfully uploaded.');
+                    for (let i in data) {
+                        console.log(i + ': ' + data[i]);
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.statusText);
+                }
+            });
+        }
+
+        $('#upload').click(uploadImages);
+
+    </script>
+
+}

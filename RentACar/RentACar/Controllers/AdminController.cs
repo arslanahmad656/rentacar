@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.IO;
 
 namespace RentACar.Controllers
 {
@@ -563,6 +564,161 @@ namespace RentACar.Controllers
             db.VisitorQueries.Remove(model);
             db.SaveChanges();
             return RedirectToAction("VisitorQueryList");
+        }
+
+        #endregion
+
+        #region VehicleImages
+
+        public ActionResult ImageDashBoard()
+        {
+            ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
+            return View();
+        }
+
+        public ActionResult AddVehicleImage()
+        {
+            ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult UploadVehicleImages()
+        {
+            try
+            {
+                var vehicleId = Convert.ToInt32(Request.Form["vehicleId"]);
+                var dbVehicle = db.Vehicles.Find(vehicleId);
+                if(dbVehicle == null)
+                {
+                    throw new Exception("Could not find the vehicle");
+                }
+                var totalImages = Convert.ToInt32(Request.Form["imgCount"]);
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var dbImage = new Image()
+                    {
+                        Path = "something"
+                    };
+                    db.Images.Add(dbImage);
+                    db.SaveChanges();
+                    var img = Request.Files[i];
+                    var imgExtension = Path.GetExtension(img.FileName);
+                    var imgNameToStoreInDb = $"img_veh_{vehicleId}_{dbImage.Id}{imgExtension}";
+                    var rootPath = Server.MapPath(ApplicationWideData.StorageRootPath);
+                    var serverPath = Path.Combine(rootPath, imgNameToStoreInDb);
+                    img.SaveAs(serverPath);
+                    dbImage = db.Images.Find(dbImage.Id);
+                    dbImage.Path = imgNameToStoreInDb;
+                    db.Entry(dbImage).State = EntityState.Modified;
+                    db.SaveChanges();
+                    var vehicleImage = new VehicleImage
+                    {
+                        ImageId = dbImage.Id,
+                        VehicleId = dbVehicle.Id
+                    };
+                    db.VehicleImages.Add(vehicleImage);
+                    db.SaveChanges();
+                }
+                var statusObj = new
+                {
+                    status = "success",
+                    exceptionOccurred = "false",
+                    filesUploaded = Request.Files.Count
+                };
+                return Json(statusObj, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var statusObj = new
+                {
+                    status = "error",
+                    exceptionOccurred = "true",
+                    exceptionMessage = ex.Message
+                };
+                return Json(statusObj, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetImagesForVehicle(int vehicleId)
+        {
+            try
+            {
+                var vehicle = db.Vehicles.Find(vehicleId);
+                if(vehicle == null)
+                {
+                    throw new Exception("Could not find the image");
+                }
+                var imagePaths = db.VehicleImages
+                    .Where(vi => vi.VehicleId == vehicle.Id)
+                    .Select(vi => vi.Image)
+                    .Select(i => new
+                    {
+                        id = i.Id,
+                        path = i.Path
+                    })
+                    .ToArray();
+                var statusObj = new
+                {
+                    status = "success",
+                    exceptionOccurred = false,
+                    pathArray = imagePaths
+                };
+                return Json(statusObj, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var statusObj = new
+                {
+                    status = "error",
+                    exceptionOccurred = true,
+                    exceptionMessage = ex.Message
+                };
+                return Json(statusObj, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteImageForVehicle()
+        {
+            try
+            {
+                var vehicleId = Convert.ToInt32(Request.Form["vehicleId"]);
+                var imageId = Convert.ToInt32(Request.Form["imageId"]);
+                var vehicle = db.Vehicles.Find(vehicleId);
+                if (vehicle == null)
+                {
+                    throw new Exception("Vehicle not found.");
+                }
+                var img = db.Images.Find(imageId);
+                if(img == null)
+                {
+                    throw new Exception("Image not found");
+                }
+                var fileToDelete = Path.Combine(Server.MapPath(ApplicationWideData.StorageRootPath), img.Path);
+                System.IO.File.Delete(fileToDelete);
+                var vehicleImg = db.VehicleImages.Where(vi => vi.VehicleId == vehicle.Id && vi.ImageId == img.Id)
+                    .First();
+                db.VehicleImages.Remove(vehicleImg);
+                db.SaveChanges();
+                db.Images.Remove(img);
+                db.SaveChanges();
+                return Json(new
+                {
+                    status = "success",
+                    exceptionOccurred = false
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch(Exception ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    exceptionOccurred = true,
+                    exceptionMessage = ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion

@@ -1,0 +1,170 @@
+﻿@using RentACar.Models;
+@{
+    ViewBag.Title = "ImageDashBoard";
+}
+
+<style>
+    .img-card {
+        width: 200px;
+        height: 200px;
+        box-shadow: 4px 8px 16px #aaa;
+        margin-bottom: 36px;
+        transition: box-shadow 0.5s;
+        position: relative;
+    }
+    .img-card:hover {
+        box-shadow: 8px 16px 32px #888;
+    }
+
+    .img-card:hover .btn-delete {
+        visibility: visible;
+    }
+
+    .img-card .btn-delete {
+        background-color: transparent;
+        width: 30px;
+        height: 30px;
+        border: none;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        visibility: hidden;
+    }
+</style>
+
+<h2>ImageDashBoard</h2>
+
+<div class="row">
+    <div class="col-md-4 text-right">Select Vehicle</div>
+    <div class="col-md-8">
+        @Html.DropDownList("VehicleId", null, new { @class = "form-control" })
+    </div>
+</div>
+
+<div id="imgCotainer" class="container-fluid" style="margin-top: 20px">
+
+</div>
+<div class="container-fluid">
+    <input id="file" class="btn btn-default" type="file" multiple />
+    <button id="upload" class="btn btn-default">Upload</button>
+</div>
+
+@section Scripts{
+
+    
+    <script>
+
+        (function handleImageGetRequests() {
+            function loadImages() {
+                var vehicleId = Number($('#VehicleId').val().trim());
+                $.ajax({
+                    url: '@Url.Action("GetImagesForVehicle")',
+                    data: {
+                        'vehicleId': vehicleId
+                    },
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        if (data['status'] === 'success') {
+                            var html = '<div class="row">';
+                            var paths = data['pathArray'];
+                            var imagesProcessed = 0;
+                            for (let i = 0; i < paths.length; i++) {
+                                if (imagesProcessed % 3 === 0) {
+                                    html += '</div><div class="row">';
+                                }
+                                imagesProcessed++;
+                                html += '<div class="col-md-4"><div class="img-card"><img src = "@Url.Content(ApplicationWideData.StorageRootPath)/' + paths[i]['path'] + '" alt = "image loaded here" style="width:200px;heigth:200px"/><button onclick="deleteImage.apply(this)" class="btn-delete" data-delete data-delete-id="' + paths[i]['id'] + '"><span class="glyphicon glyphicon-remove"></span></button></div></div>';
+                            }
+                            $('#imgCotainer').html(html);
+                        } else {
+                            var errorMessage = 'Error occurred.';
+                            if (data['exceptionOccurred'] === true) {
+                                errorMessage += ' An exception occurred.';
+                                errorMessage += ' Message: ' + data['exceptionMessage'];
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log('ajax error');
+                        console.log(xhr.statusText);
+                        console.log(xhr);
+                    }
+                });
+            }
+
+            $('#VehicleId').change(loadImages);
+            loadImages($('#VehicleId').val().trim());
+        })();
+
+        //(function handleImageDeleteRequests() {
+        //    function deleteImage() {
+        //        alert('delete executing');
+        //        console.log('Delete init');
+        //    }
+        //    //alert($('#imgContainer [data-delete]'));
+        //    $('#imgContainer [data-delete]').css('background-color', 'black');
+        //})();
+
+        function deleteImage() {
+            console.log(this);
+            var vehicleId = Number($('#VehicleId').val().trim());
+            var imgId = Number($(this).attr('data-delete-id').trim());
+            console.log('Vehicle Id: ' + vehicleId);
+            console.log('imgId: ' + imgId);
+            $.ajax({
+                url: '@Url.Action("DeleteImageForVehicle")',
+                data: {
+                    'vehicleId': vehicleId,
+                    'imageId': imgId
+                },
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function (xhr) {
+                    console.log(xhr.statusText);
+                    console.log(xhr);
+                }
+            });
+        }
+
+        (function handleImageUploads() {
+            $('#upload').click(function () {
+                var images = $('#file').get(0).files;
+                if (images.length <= 0) {
+                    alert('You have not selected any file.');
+                    return;
+                }
+                var vehicleId = Number($('#VehicleId').val().trim());
+                var formData = new FormData();
+                formData.append('imgCount', images.length);
+                formData.append('vehicleId', vehicleId);
+                for (let i = 0; i < images.length; i++) {
+                    formData.append(images[i].name, images[i]);
+                }
+                $.ajax({
+                    url: '@Url.Action("UploadVehicleImages")',
+                    data: formData,
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        location.reload();
+                        console.log('File(s) have been successfully uploaded.');
+                        for (let i in data) {
+                            console.log(i + ': ' + data[i]);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.statusText);
+                    }
+                });
+            });
+        })();
+
+    </script>
+
+}
+

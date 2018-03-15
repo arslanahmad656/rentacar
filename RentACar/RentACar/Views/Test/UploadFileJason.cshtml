@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "UploadFileJason";
+}
+
+<h2>UploadFileJason</h2>
+
+<input id="file1" type="file" multiple />
+
+<button id="upload">Upload File</button>
+
+@section Scripts {
+
+    <script>
+
+        function uploadFile() {
+            var formData = new FormData();
+            var files = $('#file1').get(0).files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append(files[i].name, files[i]);
+            }
+
+            $.ajax({
+                url: '@Url.Action("UploadFile2")',
+                data: formData,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log('File(s) have been successfully updated.');
+                    for (let i in data) {
+                        console.log(i + ': ' + data[i]);
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.statusText);
+                }
+            });
+        }
+
+        $('#upload').click(uploadFile);
+
+    </script>
+
+}
+
