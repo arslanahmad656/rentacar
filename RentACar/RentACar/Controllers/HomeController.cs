@@ -10,6 +10,7 @@ namespace RentACar.Controllers
     {
         public ActionResult Index()
         {
+            //return RedirectToAction("Index", "Visitor");
             return View();
         }
 

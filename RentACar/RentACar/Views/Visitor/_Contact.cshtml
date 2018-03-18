@@ -1,0 +1,69 @@
+﻿@using RentACar.Models
+@model VisitorQuery
+
+<!-- /contact -->
+<div class="map-w3ls">
+    <div class="wthree_title_agile">
+        <h3> Contact <span>Us</span>  </h3>
+    </div>
+    <p class="sub_para">It’s time to drive</p>
+    <div class="contact-agile" id="contact">
+        <div class="contact-middle">
+            <h4>Send us a message</h4>
+            
+            <form id="Form-ContactUs" action="@Url.Action("CreateVisitorQuery")" method="post">
+                <div class="status">
+                    <div class="errors text-danger" style="display: none">
+                        <ul style="list-style: none">
+                        </ul>
+                    </div>
+                    <div class="success text-success" style="display: none">
+                        
+                    </div>
+                </div>
+                <br />
+
+                @Html.AntiForgeryToken()
+                @Html.Hidden("DatePosted", DateTime.Now)
+                @Html.Hidden("Status", false)
+
+                <div class="form-agileinfo">
+                    <div class="">
+                        <p>@Html.DisplayNameFor(model => model.Name)</p>
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { required = "", data_resettable = "" } })
+                    </div>
+                    <div class="">
+                        <p>@Html.DisplayNameFor(model => model.Email)</p>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { required = "", data_resettable = "" } })
+                    </div>
+                    <div class="">
+                        <p>@Html.DisplayNameFor(model => model.Phone)</p>
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { required = "", data_resettable = "" } })
+                    </div>
+                </div>
+                <div class="form-agileits-w3layouts">
+                    <p>@Html.DisplayNameFor(model => model.Message)</p>
+                    @Html.TextAreaFor(model => model.Message, new { required = "", data_resettable = "" })
+                    <button id="contactUsForm-SubmitAjax" type="button" class="submitBtn">Send Message Ajax</button>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+        <div class="contact-left">
+            <h6>Room# 126</h6>
+            <p>Khalid Bin Waleed Hall, Punjab University, Lahore</p>
+            <p>+92 308 4063 662</p>
+            <p><a href="mailto:info@example.com">ars.ahm6@gmail.com</a></p>
+            <h6>Opening Hours</h6>
+            <p>Monday-Friday</p>
+            <span>7.00AM-10.00PM</span>
+            ​<p>Saturday-Sunday</p>
+            ​<span>7.00AM-8.00PM</span>
+        </div>
+
+    </div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12947831.742778081!2d-95.665!3d37.599999999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited+States!5e0!3m2!1sen!2sin!4v1422444552833"></iframe>
+
+</div>
+<!-- //contact -->
+

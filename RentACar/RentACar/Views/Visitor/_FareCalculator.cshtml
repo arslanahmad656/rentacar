@@ -1,0 +1,195 @@
+﻿@using RentACar.Models;
+@model BookingRequest
+@{ 
+    var vehicleCategories = (List<VehicleCategory>)ViewBag.VehicleCategories;
+}
+<style>
+    .inp-custom {
+        width: 100%;
+
+        padding: 7px 10px;
+
+        font-size: 15px;
+
+        border: none;
+
+        border-bottom-width: medium;
+        border-bottom-style: none;
+        border-bottom-color: currentcolor;
+
+        background: rgba(68, 68, 68, 0.28);
+
+        border-bottom: 2px solid rgba(68, 68, 68, 0.28);
+
+        color: #fff;
+
+        transition: all 0.5s ease-in-out;
+
+        -webkit-transition: all 0.5s ease-in-out;
+
+        -moz-transition: all 0.5s ease-in-out;
+
+        -o-transition: all 0.5s ease-in-out;
+
+        -ms-transition: all 0.5s ease-in-out;
+
+        margin-bottom: 1.2em;
+    }
+
+    .inp-custom:hover{
+        border-bottom: 2px solid rgba(255, 255, 255, 0.62);
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+    }
+
+    .btn-custom {
+        display: block;
+        width: 100%;
+        padding: 7px 10px;
+        text-transform: uppercase;
+        background-color: #e3001f;
+        color: white;
+        border: none;
+    }
+
+    #_FareCalculator {
+        background: url('../../Template_Data/images/s4.jpg') no-repeat 0px 0px;
+        background-size: auto auto;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        -ms-background-size: cover;
+        -moz-background-size: cover;
+        min-height: 500px;
+        padding-top: 4em;
+    }
+</style>
+
+<div class="middile" id="_FareCalculator">
+
+    <div class="wthree_title_agile two">
+        <h3 style="color: black">Calculate <span>Fare</span></h3>
+    </div>
+
+    <div class="container-fluid" style="background-color: black; opacity: 0.8; padding-top: 50px; padding-bottom: 50px;">
+        
+        <form id="Form-FareCalculate">
+            
+            @Html.AntiForgeryToken()
+            @Html.Hidden("RequestStatusId", ApplicationWideData.RequestStatusNotViewed)
+            @Html.Hidden("RequestInitiated", DateTime.Now)
+
+            <div class="status">
+                <div class="errors text-danger" style="display: none">
+                    <ul style="list-style: none"></ul>
+                </div>
+                <div class="success text-success" style="display: none">
+
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Name", data_resettable = "" } })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Email", data_resettable = "" } })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Phone No", data_resettable = "" } })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "inp-custom" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.DropDownList("SubLocationId", null, htmlAttributes: new { @class = "inp-custom" })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Request Date", data_resettable = "" } })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Return Date", data_resettable = "" } })
+                </div>
+
+                <div class="col-md-3">
+                    <select class="inp-custom" id="vehicleCategory">
+                        @{
+                            bool first = true;
+                        }
+                        @foreach (var item in vehicleCategories)
+                        {
+                            if (first)
+                            {
+                                <option selected value="@item.Id">@item.Title</option>
+                                first = false;
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "inp-custom" })
+                </div>
+
+                <div class="col-md-3">
+                    <select class="inp-custom" name="WithDriver" id="WithDriver">
+                        <option value="0" selected>No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    @Html.DropDownList("PaymentMethodId", null, htmlAttributes: new { @class = "inp-custom" })
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" id="fareEstimateForm-SubmitAjax" class="btn-custom">
+                        Estimate!
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <hr />
+
+        <div class="row status" style="color: white">
+            <div class="col-md-4">
+                <h2>
+                    Number of Days: <span data-days>0</span>
+                </h2>
+            </div>
+            <div class="col-md-4">
+                <h2>
+                    Price: Rs.&nbsp;<span data-price>0.00</span>
+                </h2>
+            </div>
+            <div class="col-md-4">
+                <h3>
+                    <button id="booking-RequestBooking" type="button" class="btn-custom">
+                        Request Booking
+                    </button>
+                </h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -19,6 +19,11 @@ namespace RentACar.Controllers
         // GET: Visitor
         public ActionResult Index()
         {
+            ViewBag.SubLocationId = new SelectList(db.Sublocations, "Id", "Title");
+            ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title");
+            ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title");
+            ViewBag.VehicleCategories = db.VehicleCategories.ToList();
             return View();
         }
 
@@ -42,9 +47,12 @@ namespace RentACar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateBookingRequest(BookingRequest model)
+        public JsonResult CreateBookingRequest(BookingRequest model)
         {
-            if(ModelState.IsValid)
+            //db.BookingRequests.Add(model);
+            //db.SaveChanges();
+            //if(ModelState.IsValid)
+            if (true)
             {
                 try
                 {
@@ -52,7 +60,16 @@ namespace RentACar.Controllers
                     model.RequestStatusId = db.RequestStatus.Where(rs => rs.Code == ApplicationWideData.RequestStatusNotViewed).First().Id;
                     db.BookingRequests.Add(model);
                     db.SaveChanges();
-                    return RedirectToAction("BookingRequestList");
+                    //return RedirectToAction("BookingRequestList");
+                    return Json(new
+                    {
+                        status = "success",
+                        exceptionOccurred = false,
+                        data = new
+                        {
+                            bookingRequestId = model.Id
+                        }
+                    }, JsonRequestBehavior.AllowGet);
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -63,6 +80,13 @@ namespace RentACar.Controllers
                         errors.Add(error);
                     }
                     ViewBag.Errors = errors;
+                    return Json(new
+                    {
+                        status = "success",
+                        exceptionOccurred = false,
+                        exceptionMessage = ex.Message,
+                        data = errors
+                    }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
@@ -70,14 +94,26 @@ namespace RentACar.Controllers
                     {
                         ex.Message
                     };
+                    return Json(new
+                    {
+                        status = "error",
+                        exceptionOccurred = true,
+                        exceptionMessage = ex.Message
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
-            ViewBag.SubLocationId = new SelectList(db.Sublocations, "Id", "Title", model.SubLocationId);
-            ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title", model.PaymentMethodId);
-            ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title", model.VehicleId);
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title", model.LocationId);
-            ViewBag.VehicleCategories = db.VehicleCategories.ToList();
-            return View(model);
+            //ViewBag.SubLocationId = new SelectList(db.Sublocations, "Id", "Title", model.SubLocationId);
+            //ViewBag.PaymentMethodId = new SelectList(db.PaymentMethods, "Id", "Title", model.PaymentMethodId);
+            //ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title", model.VehicleId);
+            //ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title", model.LocationId);
+            //ViewBag.VehicleCategories = db.VehicleCategories.ToList();
+            //return View(model);
+            return Json(new
+            {
+                status = "error",
+                errorOccurred = false,
+                data = "Model state is invalid"
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -91,7 +127,7 @@ namespace RentACar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateVisitorQuery(VisitorQuery model)
+        public JsonResult CreateVisitorQuery(VisitorQuery model)
         {
             if(ModelState.IsValid)
             {
@@ -101,7 +137,15 @@ namespace RentACar.Controllers
                     model.Status = ApplicationWideData.VisitorQueryNotViewed;
                     db.VisitorQueries.Add(model);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    //return RedirectToAction("Index");
+                    
+
+                    return Json(new
+                    {
+                        status = "success",
+                        exceptionOccurred = false,
+                        data = $"Visitor Query id: {model.Id}"
+                    }, JsonRequestBehavior.AllowGet);
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -111,17 +155,38 @@ namespace RentACar.Controllers
                     {
                         errors.Add(error);
                     }
-                    ViewBag.Errors = errors;
+                    //ViewBag.VisitorQueryErrors = errors;
+                    return Json(new
+                    {
+                        status = "error",
+                        exceptionOccurred = true,
+                        exceptionMessage = ex.Message,
+                        data = errors
+                    }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Errors = new List<string>
+                    var errors = new List<string>
                     {
                         ex.Message
                     };
+                    return Json(new
+                    {
+                        status = "error",
+                        exceptionOccurred = true,
+                        exceptionMessage = ex.Message,
+                        data = errors
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return View(model);
+            return Json(new
+            {
+                status = "error",
+                exceptionOccurred = false,
+                data = "Model state is invalid"
+            }, JsonRequestBehavior.AllowGet);
+            //return View(model);
+
         }
 
         #endregion

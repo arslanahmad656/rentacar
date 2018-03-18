@@ -80,6 +80,10 @@ namespace RentACar.Models
 
         public static int FareDaysStep3 => 14;
 
+        public static string HeadingJumbotron => "RENT A CAR";
+
+        public static string SubHeadingJumbotron => "Car Rentals, Rooms and Honeymoon Packages";
+
         #endregion
     }
 }
