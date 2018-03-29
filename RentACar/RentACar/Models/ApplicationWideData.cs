@@ -69,7 +69,7 @@ namespace RentACar.Models
         public static string GetVisitorQueryStatus(bool code) =>
             code ? "true" : "false";
 
-        public static string StorageRootPath => "~/Content";
+        public static string StorageRootPath => "~/uploads";
 
         public static string DriverCostKey => "drivercost";
 
