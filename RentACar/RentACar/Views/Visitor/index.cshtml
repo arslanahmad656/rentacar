@@ -1,0 +1,45 @@
+﻿@using RentACar.Models;
+
+@{ 
+    Layout = "~/Views/Shared/_Visitor.cshtml";
+}
+
+@*@Html.Partial("_BannerTop")*@
+
+@Html.Partial("_BannerTop2")
+
+@Html.Partial("_Modals")
+
+@*@Html.Partial("_BannerBottom")*@
+
+@Html.Partial("_About")
+
+@*@Html.Partial("_Services")*@
+
+@Html.Partial("_FareCalculator")
+
+@Html.Partial("_Team")
+
+@Html.Partial("_Gallery")
+
+@Html.Partial("_GalleryMeta")
+
+@*@Html.Partial("_GalleryMeta2")*@
+
+@Html.Partial("_Contact")
+
+@Html.Partial("_Map")
+
+@*<div style="background-color: black; color: white; min-height:600px" id="mycustomsection">
+    <h1>Hello! Testing div</h1>
+</div>*@
+
+@section c_scripts{
+
+<script src="~/Template_Data/js/ContactUsFormHandler.js"></script>
+<script src="~/Template_Data/js/CalculateFareFormHandler.js"></script>
+<script src="~/Template_Data/js/BookingRequestFormHandler.js"></script>
+<script src="~/Template_Data/js/GalleryMetaHandler.js"></script>
+    
+
+}
