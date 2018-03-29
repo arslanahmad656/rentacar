@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RentACarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -136,16 +136,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="512" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Vehicle">
           <Key>
@@ -357,7 +347,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VehicleImage_Image">
-          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VehicleImage" Type="Self.VehicleImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Image">
@@ -369,7 +361,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VehicleImage_Vehicle">
-          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VehicleImage" Type="Self.VehicleImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Vehicle">
@@ -404,7 +398,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RentACarModelStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -419,7 +413,6 @@
           <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sublocation" EntityType="Self.Sublocation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VehicleCategory" EntityType="Self.VehicleCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VehicleImage" EntityType="Self.VehicleImage" Schema="dbo" store:Type="Tables" />
@@ -495,7 +488,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="RentACarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -638,16 +631,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="BookingRequests" Relationship="Self.FK_BookingRequest_Sublocation" FromRole="Sublocation" ToRole="BookingRequest" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Vehicle">
           <Key>
@@ -818,7 +801,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VehicleImage_Image">
-          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VehicleImage" Type="Self.VehicleImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Image">
@@ -866,7 +851,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VehicleImage_Vehicle">
-          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VehicleImage" Type="Self.VehicleImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Vehicle">
@@ -907,7 +894,6 @@
           <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
           <EntitySet Name="RequestStatus" EntityType="Self.RequestStatu" />
           <EntitySet Name="Sublocations" EntityType="Self.Sublocation" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
           <EntitySet Name="VehicleCategories" EntityType="Self.VehicleCategory" />
           <EntitySet Name="VehicleImages" EntityType="Self.VehicleImage" />
@@ -980,9 +966,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RentACarModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="RentACarModel.C__MigrationHistory">
+            <EntityTypeMapping TypeName="Model.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -992,7 +978,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="RentACarModel.AspNetRole">
+            <EntityTypeMapping TypeName="Model.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1000,7 +986,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="RentACarModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="Model.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1010,7 +996,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="RentACarModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="Model.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -1019,7 +1005,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="RentACarModel.AspNetUser">
+            <EntityTypeMapping TypeName="Model.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1037,7 +1023,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bookings">
-            <EntityTypeMapping TypeName="RentACarModel.Booking">
+            <EntityTypeMapping TypeName="Model.Booking">
               <MappingFragment StoreEntitySet="Booking">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BookingRequestId" ColumnName="BookingRequestId" />
@@ -1046,7 +1032,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BookingRequests">
-            <EntityTypeMapping TypeName="RentACarModel.BookingRequest">
+            <EntityTypeMapping TypeName="Model.BookingRequest">
               <MappingFragment StoreEntitySet="BookingRequest">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1066,7 +1052,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GlobalDatas">
-            <EntityTypeMapping TypeName="RentACarModel.GlobalData">
+            <EntityTypeMapping TypeName="Model.GlobalData">
               <MappingFragment StoreEntitySet="GlobalData">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Key" ColumnName="Key" />
@@ -1075,7 +1061,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="RentACarModel.Image">
+            <EntityTypeMapping TypeName="Model.Image">
               <MappingFragment StoreEntitySet="Image">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
@@ -1083,7 +1069,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="RentACarModel.Location">
+            <EntityTypeMapping TypeName="Model.Location">
               <MappingFragment StoreEntitySet="Location">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1091,7 +1077,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PaymentMethods">
-            <EntityTypeMapping TypeName="RentACarModel.PaymentMethod">
+            <EntityTypeMapping TypeName="Model.PaymentMethod">
               <MappingFragment StoreEntitySet="PaymentMethod">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1099,7 +1085,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestStatus">
-            <EntityTypeMapping TypeName="RentACarModel.RequestStatu">
+            <EntityTypeMapping TypeName="Model.RequestStatu">
               <MappingFragment StoreEntitySet="RequestStatus">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -1108,26 +1094,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sublocations">
-            <EntityTypeMapping TypeName="RentACarModel.Sublocation">
+            <EntityTypeMapping TypeName="Model.Sublocation">
               <MappingFragment StoreEntitySet="Sublocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="RentACarModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Vehicles">
-            <EntityTypeMapping TypeName="RentACarModel.Vehicle">
+            <EntityTypeMapping TypeName="Model.Vehicle">
               <MappingFragment StoreEntitySet="Vehicle">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -1142,7 +1117,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VehicleCategories">
-            <EntityTypeMapping TypeName="RentACarModel.VehicleCategory">
+            <EntityTypeMapping TypeName="Model.VehicleCategory">
               <MappingFragment StoreEntitySet="VehicleCategory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1150,7 +1125,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VehicleImages">
-            <EntityTypeMapping TypeName="RentACarModel.VehicleImage">
+            <EntityTypeMapping TypeName="Model.VehicleImage">
               <MappingFragment StoreEntitySet="VehicleImage">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
@@ -1159,7 +1134,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VehicleLocations">
-            <EntityTypeMapping TypeName="RentACarModel.VehicleLocation">
+            <EntityTypeMapping TypeName="Model.VehicleLocation">
               <MappingFragment StoreEntitySet="VehicleLocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
@@ -1168,7 +1143,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VehicleTransmissions">
-            <EntityTypeMapping TypeName="RentACarModel.VehicleTransmission">
+            <EntityTypeMapping TypeName="Model.VehicleTransmission">
               <MappingFragment StoreEntitySet="VehicleTransmission">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -1177,7 +1152,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VisitorQueries">
-            <EntityTypeMapping TypeName="RentACarModel.VisitorQuery">
+            <EntityTypeMapping TypeName="Model.VisitorQuery">
               <MappingFragment StoreEntitySet="VisitorQuery">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1189,7 +1164,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="RentACarModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>

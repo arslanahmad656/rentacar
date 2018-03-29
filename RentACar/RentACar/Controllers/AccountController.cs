@@ -79,7 +79,11 @@ namespace RentACar.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    if (User.IsInRole("admin"))
+                        return RedirectToAction("index", "admin");
+                    else
+                        return RedirectToAction("index", "home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

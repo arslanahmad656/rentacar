@@ -239,7 +239,7 @@ namespace RentACar
             {
                 var appName = new GlobalData()
                 {
-                    Key = YouTubeKey,
+                    Key = ApplicationNameKey,
                     Value = "Speego Tours"
                 };
                 db.GlobalDatas.Add(appName);
