@@ -44,7 +44,7 @@
                 <div class="form-agileits-w3layouts">
                     <p>@Html.DisplayNameFor(model => model.Message)</p>
                     @Html.TextAreaFor(model => model.Message, new { required = "", data_resettable = "" })
-                    <button id="contactUsForm-SubmitAjax" type="button" class="submitBtn">Send Message Ajax</button>
+                    <button id="contactUsForm-SubmitAjax" type="button" class="submitBtn">Send Message</button>
                 </div>
                 <div class="clearfix"></div>
             </form>
@@ -53,7 +53,7 @@
             <h6>Room# 126</h6>
             <p>Khalid Bin Waleed Hall, Punjab University, Lahore</p>
             <p>+92 308 4063 662</p>
-            <p><a href="mailto:info@example.com">ars.ahm6@gmail.com</a></p>
+            <p><a href="@ApplicationWideData.EmailValue1">@ApplicationWideData.EmailValue1</a></p>
             <h6>Opening Hours</h6>
             <p>Monday-Friday</p>
             <span>7.00AM-10.00PM</span>

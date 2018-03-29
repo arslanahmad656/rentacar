@@ -1,4 +1,9 @@
-﻿<!-- //gallery -->
+﻿@using RentACar.Models;
+@{
+    var vehicles = (List<GalleryViewModel>)ViewBag.GalleryVehicles;
+}
+
+<!-- //gallery -->
 <div class="gallery" id="gallery">
     <!-- gallery -->
     <div class="container">
@@ -6,178 +11,97 @@
             <h3> Our <span>Latest</span>  Cars </h3>
         </div>
         <div class="inner_w3l_agile_grids">
-            <div class="col-md-4 gal-gd wow fadeInLeft animated" data-wow-delay=".5s">
-                <a href="#image-1">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g1.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
+            @{
+                int col4Counter = 0;
+                int col6Counter = 0;
+                bool col4Turn = true;
+            }
+            <script>
+                console.log('Total vehicles: ' + @vehicles.Count);
+            </script>
+            @foreach (var vehicle in vehicles)
+            {
+                if (string.IsNullOrWhiteSpace(vehicle.ImagePath))
+                {
+                    vehicle.ImagePath = ApplicationWideData.DefaultImageValue;
+                }
+                <script>
+                    console.log('Current vehicle image path: @vehicle.ImagePath');
+                </script>
+                if (col4Turn)
+                {
 
+                    <div class="col-md-4 gal-gd wow fadeInLeft animated" data-wow-delay=".5s">
+                        <a href="#image-meta-@vehicle.Identifier">
+                            <div class="nd-wrap nd-style-8" style="height: 300px;">
+                                <img src="@Url.Content($@"{ApplicationWideData.StorageRootPath}\{vehicle.ImagePath}")" class="img-responsive" alt=" " />
+                                <div class="nd-content">
+                                    <div class="nd-content_inner">
+                                        <div class="nd-content_inner1">
+                                            <h4 class="nd-title">@vehicle.Title</h4>
+                                            <span class="nd-icon">
+                                                <i class="glyphicon glyphicon-link"></i>
+                                            </span>
+                                            <span class="nd-icon">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </span>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+
+
                     </div>
-                </a>
+                    col4Counter++;
+                }
+                else
+                {
+                    <div class="col-md-6 gal-gd-sec wow fadeInLeft animated" data-wow-delay=".5s">
+                        <a href="#image-meta-@vehicle.Identifier">
+                            <div class="nd-wrap nd-style-8" style="height: 300px;">
+                                <img src="@Url.Content($@"{ApplicationWideData.StorageRootPath}\{vehicle.ImagePath}")" class="img-responsive" alt=" " />
+                                <div class="nd-content">
+                                    <div class="nd-content_inner">
+                                        <div class="nd-content_inner1">
+                                            <h4 class="nd-title">@vehicle.Title</h4>
+                                            <span class="nd-icon">
+                                                <i class="glyphicon glyphicon-link"></i>
+                                            </span>
+                                            <span class="nd-icon">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </span>
 
-
-            </div>
-            <div class="col-md-4 gal-gd wow fadeInUp animated" data-wow-delay=".5s">
-                <a href="#image-2">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g2.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+
+
                     </div>
-                </a>
+                    col6Counter++;
+                }
+                if (col4Turn)
+                {
+                    if (col4Counter == 3)
+                    {
+                        col4Counter = 0;
+                        col4Turn = false;
+                    }
+                }
+                else
+                {
+                    if (col6Counter == 2)
+                    {
+                        col6Counter = 0;
+                        col4Turn = true;
+                    }
+                }
+            }
 
 
-            </div>
-            <div class="col-md-4 gal-gd wow fadeInRight animated" data-wow-delay=".5s">
-                <a href="#image-3">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g3.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6 gal-gd-sec wow fadeInLeft animated" data-wow-delay=".5s">
-                <a href="#image-4">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g4.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6 gal-gd-sec wow fadeInRight animated" data-wow-delay=".5s">
-                <a href="#image-5">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g5.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 gal-gd wow fadeInLeft animated" data-wow-delay=".5s">
-                <a href="#image-6">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g6.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 gal-gd wow fadeInDown animated" data-wow-delay=".5s">
-                <a href="#image-7">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g7.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 gal-gd wow fadeInRight animated" data-wow-delay=".5s">
-                <a href="#image-8">
-                    <div class="nd-wrap nd-style-8">
-                        <img src="~/Template_Data/images/g8.jpg" class="img-responsive" alt=" " />
-                        <div class="nd-content">
-                            <div class="nd-content_inner">
-                                <div class="nd-content_inner1">
-                                    <h4 class="nd-title">Car Rental</h4>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </span>
-                                    <span class="nd-icon">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
             <div class="clearfix"></div>
         </div>
     </div>

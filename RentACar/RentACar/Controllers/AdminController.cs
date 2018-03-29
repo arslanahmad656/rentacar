@@ -747,5 +747,88 @@ namespace RentACar.Controllers
         }
 
         #endregion
+
+        #region BookingRequest
+
+        public ActionResult BookingRequestList()
+        {
+            return View(db.BookingRequests);
+        }
+
+        public ActionResult BookingRequestDetails(int id)
+        {
+            var model = db.BookingRequests.Find(id);
+            if(model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        public ActionResult DeleteBookingRequest(int id)
+        {
+            var model = db.BookingRequests.Find(id);
+            if(model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("DeleteBookingRequest")]
+        public ActionResult DeleteBookingRequestConfirmed(int id)
+        {
+            var model = db.BookingRequests.Find(id);
+            db.BookingRequests.Remove(model);
+            db.SaveChanges();
+            return RedirectToAction("BookingRequestList");
+        }
+
+        [HttpPost]
+        public JsonResult ChangeBookingRequestRequestViewDate(int id, string antiForgeryToken)
+        {
+            var model = db.BookingRequests.Find(id);
+            if(model == null)
+            {
+                throw new Exception("HttpNotFound-404");
+            }
+            model.RequestViewed = DateTime.Now;
+            model.RequestStatusId = db.RequestStatus.Where(rs => rs.Code == ApplicationWideData.RequestStatusNoAction).First().Id;
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(true);
+        }
+
+        [HttpPost]
+        public JsonResult ApproveBookingRequest(int id, string antiForgeryToken)
+        {
+            var model = db.BookingRequests.Find(id);
+            if (model == null)
+            {
+                throw new Exception("HttpNotFound-404");
+            }
+            model.RequestStatusId = db.RequestStatus.Where(rs => rs.Code == ApplicationWideData.RequestStatusApproved).First().Id;
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(true);
+        }
+
+        [HttpPost]
+        public JsonResult CancelBookingRequest(int id, string antiForgeryToken)
+        {
+            var model = db.BookingRequests.Find(id);
+            if (model == null)
+            {
+                throw new Exception("HttpNotFound-404");
+            }
+            model.RequestStatusId = db.RequestStatus.Where(rs => rs.Code == ApplicationWideData.RequestStatusCancelled).First().Id;
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(true);
+        }
+
+        #endregion
     }
 }

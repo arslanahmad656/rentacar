@@ -1,8 +1,10 @@
-﻿<!doctype html>
+﻿@using RentACar.Models
+
+<!doctype html>
 
 <html>
 <head>
-    <title>Rent A Car</title>
+    <title>@ApplicationWideData.ApplicationNameValue</title>
     <!-- for-mobile-apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -32,7 +34,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1><a href="index.html"><span class="logo-c">C</span><i class="fa fa-car" aria-hidden="true"></i>Rental</a><p class="sub-cap">Drive to Any where</p></h1>
+                @*<h1><a href="index.html"><span class="logo-c">C</span><i class="fa fa-car" aria-hidden="true"></i>Rental</a><p class="sub-cap">Drive to Any where</p></h1>*@
+                <h1><a href="@Url.Action("Index", "Visitor")"><img src="~/Template_Data/images/logo.png" style="width: 100px; height: 100px" /></a><span class="logo-c">Speego</span><p class="sub-cap">Go with Speed</p></h1>
             </div>
             <!-- navbar-header -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -43,6 +46,8 @@
                     <li><a href="#team" class="hvr-underline-from-center scroll">Team</a></li>
                     <li><a href="#gallery" class="hvr-underline-from-center scroll">Latest Cars</a></li>
                     <li><a href="#contact" class="hvr-underline-from-center scroll">Contact Us</a></li>
+                    <li><a onclick="event.preventDefault(); location.href = '/Account/Login'" href="@Url.Action("Login", "Account")" class="hvr-underline-from-center scroll">Login</a></li>
+                    <li style="display: none"><a href="#_FareCalculator" class="hvr-underline-from-center scroll">Custom Section</a></li>
                 </ul>
             </div>
             <div class="clearfix"> </div>
@@ -62,9 +67,9 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p>
                 <div class="w3ls_newsletter_social">
                     <ul class="agileits_social_list">
-                        <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                        <li><a href="@ApplicationWideData.FaceBookValue" target="_blank" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="@ApplicationWideData.YouTubeValue" target="_blank" class="agile_twitter"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                        @*<li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>*@
 
                     </ul>
                 </div>
@@ -105,22 +110,6 @@
                     <div class="clearfix"> </div>
                 </div>
 
-            </div>
-            <div class="col-md-3 footer-grid">
-                <h3>From Flickr</h3>
-                <div class="footer-grid-instagram">
-                    <a href="#"><img src="images/s3.jpg" alt=" " class="img-responsive"></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="#"><img src="images/s4.jpg" alt=" " class="img-responsive"></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="#"><img src="images/s5.jpg" alt=" " class="img-responsive"></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="#"><img src="images/s1.jpg" alt=" " class="img-responsive"></a>
-                </div>
-                <div class="clearfix"> </div>
             </div>
             <div class="clearfix"> </div>
         </div>

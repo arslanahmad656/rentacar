@@ -1,104 +1,30 @@
-﻿<div class="lb-overlay" id="image-1">
-    <img src="~/Template_Data/images/g1.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
+﻿@using RentACar.Models;
+@{
+    var vehicles = (List<GalleryMetaViewModel>)ViewBag.GalleryMetaVehicles;
+}
+
+<div class="container-fluid" id="image-meta-data">
+    @foreach (var vehicle in vehicles)
+    {
+        <div class="lb-overlay" id="image-meta-@vehicle.Identifier">
+            @if (string.IsNullOrEmpty(vehicle.ImagePath))
+            {
+                vehicle.ImagePath = ApplicationWideData.DefaultImageValue;
+            }
+            <img src="@Url.Content($@"{ApplicationWideData.StorageRootPath}\{vehicle.ImagePath}")" alt="image1" />
+            <div class="gal-info">
+                <h3>@vehicle.Title by @vehicle.Make (@vehicle.Year)</h3>
+                <p style="font-weight:bold">@vehicle.Category.Title</p>
+                <p style="font-weight:bold">@vehicle.Transmission Transmission</p>
+                <p style="font-weight:bold">Rs. @vehicle.Fare1 (For less than 14 days)</p>
+                <p style="font-weight:bold">Rs. @vehicle.Fare2 (For less than 30 days)</p>
+                <p style="font-weight:bold">Rs. @vehicle.Fare1 (For more than 30 days)</p>
+                <button id="vehiclemeta-RequestBooking-@vehicle.Identifier" type="button" class="btn-custom" data-btn-vehiclemeta-book data-category="@vehicle.Category.Id" data-vehicle="@vehicle.Identifier">
+                    Request Booking
+                </button>
+            </div>
+            <a href="#" class="lb-close" onclick="event.preventDefault(); window.history.back()">Close</a>
+        </div>
+    }
 </div>
-<div class="lb-overlay" id="image-2">
-    <img src="~/Template_Data/images/g2.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-3">
-    <img src="~/Template_Data/images/g3.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-4">
-    <img src="~/Template_Data/images/g4.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-5">
-    <img src="~/Template_Data/images/g5.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-6">
-    <img src="~/Template_Data/images/g6.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-7">
-    <img src="~/Template_Data/images/g7.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
-<div class="lb-overlay" id="image-8">
-    <img src="~/Template_Data/images/g8.jpg" alt="image1" />
-    <div class="gal-info">
-        <h3>Car Rental</h3>
-        <p>
-            Neque porro quisquam est, qui dolorem ipsum
-            quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut
-            labore et dolore magnam aliquam quaerat voluptatem.
-        </p>
-    </div>
-    <a href="index.html" class="lb-close">Close</a>
-</div>
+

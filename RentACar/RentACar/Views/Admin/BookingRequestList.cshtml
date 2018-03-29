@@ -1,0 +1,101 @@
+﻿@model IEnumerable<RentACar.Models.BookingRequest>
+
+@{
+    ViewBag.Title = "BookingRequestList";
+}
+
+<h2>BookingRequestList</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WithDriver)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestInitiated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestViewed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentMethod.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestStatu.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sublocation.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicle.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WithDriver)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestInitiated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestViewed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentMethod.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestStatu.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sublocation.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vehicle.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "BookingRequestDetails", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteBookingRequest", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

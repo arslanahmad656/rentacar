@@ -1,4 +1,7 @@
 ﻿@using RentACar.Models
+@{ 
+    var imagePaths = (List<string>)ViewBag.ImagePaths;
+}
 
 <!-- banner -->
 <div class="banner-w3ls" id="home">
@@ -29,45 +32,21 @@
         <!-- .clearfix was removed from here -->
         <h2>@ApplicationWideData.ApplicationNameValue</h2>
         <h3>@ApplicationWideData.SubHeadingJumbotron</h3>
-        <!--timer-->
-        @*<div class="agileits-timer">
-                <div class="main-title">
-                 <div class="demo2"></div>
-            </div>
-            </div>*@
-
-        <!--//timer-->
-        <div class="callbacks_container">
-            <ul class="rslides" id="slider3">
-                <li>
-                    <div class="w3l_banner_info">
-                        <h4>Find Best Rental Car</h4>
-
+        
+        <div id="owl-demo" class="owl-carousel">
+            @foreach (var path in imagePaths)
+            {
+                <div class="item-owl">
+                    <div class="test-review">
+                        <img src="@Url.Content($"{ApplicationWideData.StorageRootPath}/{path}")" class="img-responsive" style="width:250px; height:200px" alt="" />
                     </div>
-                </li>
-                <li>
-                    <div class="w3l_banner_info">
-                        <h4>A Reliable way to travel!</h4>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="w3l_banner_info">
-                        <h4>Save time when you arrive!</h4>
-
-
-                    </div>
-                </li>
-                <li>
-                    <div class="w3l_banner_info">
-                        <h4>Rent for a month. Save $70!</h4>
-
-                    </div>
-                </li>
-            </ul>
+                </div>
+            }
         </div>
+
+
+
+
     </div>
-
-
 </div>
 <!-- //banner -->

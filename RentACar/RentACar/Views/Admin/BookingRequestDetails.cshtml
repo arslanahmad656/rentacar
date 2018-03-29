@@ -1,0 +1,199 @@
+﻿@model RentACar.Models.BookingRequest
+
+@{
+    ViewBag.Title = "BookingRequestDetails";
+}
+
+<h2>BookingRequestDetails</h2>
+
+<div>
+    <h4>BookingRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WithDriver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WithDriver)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestInitiated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestInitiated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestViewed)
+        </dt>
+
+        <dd>
+            <span id="request-viewed">@Html.DisplayFor(model => model.RequestViewed)</span>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentMethod.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMethod.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestStatu.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestStatu.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sublocation.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sublocation.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a class="btn btn-link" id="btn-approverequest">Approve Request</a> |
+    <button class="btn btn-link" id="btn-denyRequest">Deny Request</button> |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@Html.AntiForgeryToken();
+
+@section Scripts{
+
+    <script>
+        var antiForgeryToken = $('input[name=__RequestVerificationToken]').val();
+        if ($('#request-viewed').html() == '') {
+            $.ajax({
+                url: '/admin/ChangeBookingRequestRequestViewDate',
+                data: {
+                    'id': @Model.Id,
+                    'antiForgeryToken': antiForgeryToken
+                },
+                type: 'POST',
+                success: function(data){
+                    if(data === true) {
+                        console.log('done');
+                        location.reload();
+                    } else {
+                        console.log('not done');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+
+        $('#btn-approverequest').click(function(){
+            $.ajax({
+                url: '/admin/ApproveBookingRequest',
+                data: {
+                    'id': @Model.Id,
+                    'antiForgeryToken': antiForgeryToken
+                },
+                type: 'POST',
+                success: function(data){
+                    if(data === true) {
+                        console.log('done');
+                        location.reload();
+                    } else {
+                        console.log('not done');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+
+        $('#btn-denyRequest').click(function(){
+            $.ajax({
+                url: '/admin/CancelBookingRequest',
+                data: {
+                    'id': @Model.Id,
+                    'antiForgeryToken': antiForgeryToken
+                },
+                type: 'POST',
+                success: function(data){
+                    if(data === true) {
+                        console.log('done');
+                        location.reload();
+                    } else {
+                        console.log('not done');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+    </script>
+
+}

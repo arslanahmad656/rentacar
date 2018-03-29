@@ -6,25 +6,28 @@ using RentACar.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static RentACar.Models.ApplicationWideData;
 
 [assembly: OwinStartupAttribute(typeof(RentACar.Startup))]
 namespace RentACar
 {
     public partial class Startup
     {
+        private Entities db = new Entities();
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
             AddDefaultRoleAndUser();
             AddDefaultVehicleTransmissions();
             AddDefaultRequestStatus();
-            AddDefaultDriverCost();
+            AddDefaultKeys();
+            InitializeApplicationWideData();
         }
 
         private void AddDefaultRoleAndUser()
         {
             ApplicationDbContext context = new ApplicationDbContext();
-            Entities db = new Entities();
+            
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
@@ -67,7 +70,6 @@ namespace RentACar
 
         private void AddDefaultVehicleTransmissions()
         {
-            var db = new Entities();
             var transmissionExists = db.VehicleTransmissions.Any(t => t.Code == ApplicationWideData.TransmissionAutoCode);
             if(!transmissionExists)
             {
@@ -75,13 +77,13 @@ namespace RentACar
                 {
                     new VehicleTransmission
                     {
-                        Code = ApplicationWideData.TransmissionAutoCode,
-                        Title = ApplicationWideData.GetTranmissionString(ApplicationWideData.TransmissionAutoCode)
+                        Code = TransmissionAutoCode,
+                        Title = GetTranmissionString(TransmissionAutoCode)
                     },
                     new VehicleTransmission
                     {
-                        Code = ApplicationWideData.TranmissionManualCode,
-                        Title = ApplicationWideData.GetTranmissionString(ApplicationWideData.TranmissionManualCode)
+                        Code = TranmissionManualCode,
+                        Title = GetTranmissionString(TranmissionManualCode)
                     }
                 };
                 transmissions.ForEach(t => db.VehicleTransmissions.Add(t));
@@ -92,49 +94,167 @@ namespace RentACar
         private void AddDefaultRequestStatus()
         {
             var db = new Entities();
-            var requestStatusExists = db.RequestStatus.Any(rs => rs.Code == ApplicationWideData.RequestStatusApproved);
+            var requestStatusExists = db.RequestStatus.Any(rs => rs.Code == RequestStatusApproved);
             if(!requestStatusExists)
             {
                 var requestStata = new List<RequestStatu>
                 {
                     new RequestStatu
                     {
-                        Code = ApplicationWideData.RequestStatusApproved,
-                        Title = ApplicationWideData.GetRequestStatusString(ApplicationWideData.RequestStatusApproved)
+                        Code = RequestStatusApproved,
+                        Title = GetRequestStatusString(ApplicationWideData.RequestStatusApproved)
                     },
                     new RequestStatu
                     {
-                        Code = ApplicationWideData.RequestStatusCancelled,
-                        Title = ApplicationWideData.GetRequestStatusString(ApplicationWideData.RequestStatusCancelled)
+                        Code = RequestStatusCancelled,
+                        Title = GetRequestStatusString(RequestStatusCancelled)
                     },
                     new RequestStatu
                     {
-                        Code = ApplicationWideData.RequestStatusNotViewed,
-                        Title = ApplicationWideData.GetRequestStatusString(ApplicationWideData.RequestStatusNotViewed)
+                        Code = RequestStatusNotViewed,
+                        Title = GetRequestStatusString(RequestStatusNotViewed)
                     }
                 };
                 requestStata.ForEach(rs => db.RequestStatus.Add(rs));
                 db.SaveChanges();
             }
+
+            if(!db.RequestStatus.Any(rs => rs.Code == RequestStatusNoAction))
+            {
+                var requestStatus = new RequestStatu
+                {
+                    Code = RequestStatusNoAction,
+                    Title = GetRequestStatusString(RequestStatusNoAction)
+                };
+                db.RequestStatus.Add(requestStatus);
+                db.SaveChanges();
+            }
         }
 
-        private void AddDefaultDriverCost()
+        private void AddDefaultKeys()
         {
-            var db = new Entities();
             try
             {
-                var driverCost = db.GlobalDatas.Where(gd => gd.Key.Equals(ApplicationWideData.DriverCostKey, StringComparison.OrdinalIgnoreCase)).First();
+                var driverCost = db.GlobalDatas.Where(gd => gd.Key.Equals(DriverCostKey, StringComparison.OrdinalIgnoreCase)).First();
             }
             catch(InvalidOperationException)
             {
                 var driverCost = new GlobalData()
                 {
-                    Key = ApplicationWideData.DriverCostKey,
+                    Key = DriverCostKey,
                     Value = "3500"
                 };
                 db.GlobalDatas.Add(driverCost);
                 db.SaveChanges();
             }
+            try
+            {
+                var defaultImg = db.GlobalDatas.Where(gd => gd.Key.Equals(DefaultImageKey, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var defaultImg = new GlobalData()
+                {
+                    Key = DefaultImageKey,
+                    Value = DefaultImageValue
+                };
+                db.GlobalDatas.Add(defaultImg);
+                db.SaveChanges();
+            }
+            try
+            {
+                var fbkey = db.GlobalDatas.Where(gd => gd.Key.Equals(FaceBookKey, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var fbkey = new GlobalData()
+                {
+                    Key = FaceBookKey,
+                    Value = "https://www.facebook.com/speegotours"
+                };
+                db.GlobalDatas.Add(fbkey);
+                db.SaveChanges();
+            }
+            try
+            {
+                var phone = db.GlobalDatas.Where(gd => gd.Key.Equals(PhoneNumberKey1, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var phone = new GlobalData()
+                {
+                    Key = PhoneNumberKey1,
+                    Value = "+92 331 6989 422"
+                };
+                db.GlobalDatas.Add(phone);
+                db.SaveChanges();
+            }
+            try
+            {
+                var email = db.GlobalDatas.Where(gd => gd.Key.Equals(EmailKey1, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var email = new GlobalData()
+                {
+                    Key = EmailKey1,
+                    Value = "info@speegotours.com"
+                };
+                db.GlobalDatas.Add(email);
+                db.SaveChanges();
+            }
+            try
+            {
+                var email = db.GlobalDatas.Where(gd => gd.Key.Equals(EmailKey1, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var email = new GlobalData()
+                {
+                    Key = EmailKey1,
+                    Value = "info@speegotours.com"
+                };
+                db.GlobalDatas.Add(email);
+                db.SaveChanges();
+            }
+            try
+            {
+                var youtube = db.GlobalDatas.Where(gd => gd.Key.Equals(YouTubeKey, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var youtube = new GlobalData()
+                {
+                    Key = YouTubeKey,
+                    Value = "https://youtu.be/ye_altohtho"
+                };
+                db.GlobalDatas.Add(youtube);
+                db.SaveChanges();
+            }
+            try
+            {
+                var appName = db.GlobalDatas.Where(gd => gd.Key.Equals(ApplicationNameKey, StringComparison.OrdinalIgnoreCase)).First();
+            }
+            catch (InvalidOperationException)
+            {
+                var appName = new GlobalData()
+                {
+                    Key = YouTubeKey,
+                    Value = "Speego Tours"
+                };
+                db.GlobalDatas.Add(appName);
+                db.SaveChanges();
+            }
+        }
+
+        private void InitializeApplicationWideData()
+        {
+            FaceBookValue = db.GlobalDatas.Where(gd => gd.Key.Equals(FaceBookKey, StringComparison.OrdinalIgnoreCase)).First().Value;
+            YouTubeValue = db.GlobalDatas.Where(gd => gd.Key.Equals(YouTubeKey, StringComparison.OrdinalIgnoreCase)).First().Value;
+            EmailValue1 = db.GlobalDatas.Where(gd => gd.Key.Equals(EmailKey1, StringComparison.OrdinalIgnoreCase)).First().Value;
+            PhoneNumberValue1 = db.GlobalDatas.Where(gd => gd.Key.Equals(PhoneNumberKey1, StringComparison.OrdinalIgnoreCase)).First().Value;
+            PhoneNumberValue1 = db.GlobalDatas.Where(gd => gd.Key.Equals(PhoneNumberKey1, StringComparison.OrdinalIgnoreCase)).First().Value;
+            ApplicationNameValue = db.GlobalDatas.Where(gd => gd.Key.Equals(ApplicationNameKey, StringComparison.OrdinalIgnoreCase)).First().Value;
         }
     }
 }

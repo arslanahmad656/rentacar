@@ -24,6 +24,37 @@ namespace RentACar.Controllers
             ViewBag.VehicleId = new SelectList(db.Vehicles, "Id", "Title");
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Title");
             ViewBag.VehicleCategories = db.VehicleCategories.ToList();
+
+            // Get vehicles to show in the gallery
+
+            var vehicles = db.Vehicles.Select(vehicle => new GalleryViewModel
+            {
+                ImagePath = vehicle.VehicleImages.Where(v => v.VehicleId == vehicle.Id).FirstOrDefault().Image.Path,
+                Title = vehicle.Title + " - " + vehicle.Make,
+                Identifier = vehicle.Id
+            }).ToList();
+            ViewBag.GalleryVehicles = vehicles;
+
+            var vehiclesMeta = db.Vehicles.Select(vehicle => new GalleryMetaViewModel
+            {
+                Make = vehicle.Make,
+                Category = vehicle.VehicleCategory,
+                Title = vehicle.Title,
+                Fare1 = vehicle.Fare1,
+                Fare2 = vehicle.Fare2,
+                Fare3 = vehicle.Fare3,
+                ImagePath = vehicle.VehicleImages.Where(v => v.VehicleId == vehicle.Id).FirstOrDefault().Image.Path,
+                Transmission = vehicle.VehicleTransmission.Title,
+                Year = vehicle.Year,
+                Identifier = vehicle.Id
+            }).ToList();
+            ViewBag.GalleryMetaVehicles = vehiclesMeta;
+
+            // end gallery
+
+            var imagePaths = db.Images.Select(i => i.Path).ToList();
+            ViewBag.ImagePaths = imagePaths;
+
             return View();
         }
 
@@ -56,6 +87,10 @@ namespace RentACar.Controllers
             {
                 try
                 {
+                    if(model.RequestDate > model.ReturnDate)
+                    {
+                        throw new Exception("Request Date must be earlier than return date.");
+                    }
                     model.RequestInitiated = DateTime.Now;
                     model.RequestStatusId = db.RequestStatus.Where(rs => rs.Code == ApplicationWideData.RequestStatusNotViewed).First().Id;
                     db.BookingRequests.Add(model);

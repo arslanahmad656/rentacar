@@ -1,0 +1,128 @@
+﻿@model RentACar.Models.BookingRequest
+
+@{
+    ViewBag.Title = "DeleteBookingRequest";
+}
+
+<h2>DeleteBookingRequest</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BookingRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WithDriver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WithDriver)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestInitiated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestInitiated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestViewed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestViewed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentMethod.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMethod.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestStatu.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestStatu.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sublocation.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sublocation.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Title)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

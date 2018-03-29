@@ -8,13 +8,53 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@RentACar.Models.ApplicationWideData.ApplicationNameValue</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .nav.admin-nav{
+            width:100%;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: rgb(26, 70, 100);
+            font-weight: 100;
+            font-family: Calibri, 'Trebuchet MS', 'Segoe UI', sans-serif;
+            text-transform: uppercase;
+            font-size: 1em;
+        }
 
+        .nav.admin-nav ul {
+            padding: 0;
+        }
+
+        .nav.admin-nav ul li {
+            list-style-type: none;
+        }
+
+        .nav.admin-nav ul li a {
+            color: white;
+            display: block;
+            padding: 8px 16px;
+            transition: background-color 0.5s,
+                color 0.5s;
+        }
+
+        .nav.admin-nav ul li a.active {
+            background-color: rgba(0, 18, 30, 0.60);
+            transition: background-color 2.5s,
+                color 2.5s;
+        }
+
+        .nav.admin-nav ul li a:hover {
+            background-color: rgb(0, 18, 30);
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,18 +66,109 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Vehicles", "VehicleList", "Admin")</li>
+                    <li>@Html.ActionLink("Vehicle Categories", "VehicleCategoryList", "Admin")</li>
+                    <li>@Html.ActionLink("Locations", "LocationList", "Admin")</li>
+                    <li>@Html.ActionLink("Sub locations", "SublocationList", "Admin")</li>
+                    <li>@Html.ActionLink("Payment Modes", "PaymentMethodList", "Admin")</li>
+                    <li>@Html.ActionLink("Bookings", "BookingList", "Admin")</li>
+                    <li>@Html.ActionLink("Orders", "BookingRequestList", "Admin")</li>
+                    <li>@Html.ActionLink("Queries", "VisitorQueryList", "Admin")</li>
+                    <li>@Html.ActionLink("Images", "ImageDashboard", "Admin")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
+    </div>*@
+    <div class="container-fluid body-content">
+        <div class="row">
+            <div id="admin-nav" class="col-md-4" style="padding-left: 0px;">
+                <div class="nav admin-nav">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("VehicleList")" id="link-home">
+                                <p>
+                                    <span class="fa fa-home" style="vertical-align: middle"></span><span>&nbsp;Vehicles</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("VehicleCategoryList")" id="link-contract">
+                                <p>
+                                    <span class="fa fa-book" style="vertical-align: middle"></span><span>&nbsp;Vehicle Categories</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("LocationList")" id="link-proprieter">
+                                <p>
+                                    <span class="fa fa-address-card" style="vertical-align: middle"></span><span>&nbsp;Locations</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SublocationList")" id="link-vehicle">
+                                <p>
+                                    <span class="fa fa-car" style="vertical-align: middle"></span><span>&nbsp;Sub Locations</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("PaymentMethodList")" id="link-driver">
+                                <p>
+                                    <span class="fa fa-user-circle" style="vertical-align: middle"></span><span>&nbsp;Payment Methods</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("BookingRequestList")" id="link-issue">
+                                <p>
+                                    <span class="fa fa-exclamation-circle" style="vertical-align: middle"></span><span>&nbsp;Booking Requests</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("BookingList")" id="link-notice">
+                                <p>
+                                    <span class="fa fa-bell" style="vertical-align: middle"></span><span>&nbsp;Bookings</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("VisitorQueryList")" id="link-vehiclerequest">
+                                <p>
+                                    <span class="fa fa-envelope-open" style="vertical-align: middle"></span><span>&nbsp;Visitor Queries</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("ImageDashboard")" id="link-hired-vehicles">
+                                <p>
+                                    <span class="fa fa-taxi" style="vertical-align: middle"></span><span>&nbsp;Manage Images</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("ImageDashboard")" id="link-hired-vehicles">
+                                <p>
+                                    <span class="fa fa-taxi" style="vertical-align: middle"></span><span>&nbsp;Manage Other</span>
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div id="content" class="col-md-8" style="margin-top: 30px;">
+                @RenderBody()
+            </div>
+        </div>
         <hr />
-        <footer>
+        <footer style="padding: 100px;background-color: yellow">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
@@ -45,5 +176,18 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        $(document).ready(function () {
+            //var navHeight = Number($('#admin-nav').css('height').slice(0, -2));
+            //var contentHeight = Number($('#content').css('height').slice(0, -2));
+            //if (contentHeight > navHeight) {
+            //    $('#admin-nav').css('height', (contentHeight - 85) + 'px');
+            //}
+            $('#admin-nav').css('height', '2000px');
+        });
+        
+    </script>
 </body>
 </html>

@@ -202,6 +202,8 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GalleryMetaViewModel.cs" />
+    <Compile Include="Models\GalleryViewModel.cs" />
     <Compile Include="Models\GlobalData.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -319,6 +321,7 @@
     <Content Include="Template_Data\images\g6.jpg" />
     <Content Include="Template_Data\images\g7.jpg" />
     <Content Include="Template_Data\images\g8.jpg" />
+    <Content Include="Template_Data\images\logo.png" />
     <Content Include="Template_Data\images\s1.jpg" />
     <Content Include="Template_Data\images\s2.jpg" />
     <Content Include="Template_Data\images\s3.jpg" />
@@ -329,12 +332,14 @@
     <Content Include="Template_Data\images\t2.jpg" />
     <Content Include="Template_Data\images\t3.jpg" />
     <Content Include="Template_Data\images\up.png" />
+    <Content Include="Template_Data\js\BookingRequestFormHandler.js" />
     <Content Include="Template_Data\js\bootstrap.js" />
     <Content Include="Template_Data\js\CalculateFareFormHandler.js" />
     <Content Include="Template_Data\js\ContactUsFormHandler.js" />
     <Content Include="Template_Data\js\demo-1.js" />
     <Content Include="Template_Data\js\dscountdown.min.js" />
     <Content Include="Template_Data\js\easing.js" />
+    <Content Include="Template_Data\js\GalleryMetaHandler.js" />
     <Content Include="Template_Data\js\jquery-2.1.4.min.js" />
     <Content Include="Template_Data\js\jquery.flexisel.js" />
     <Content Include="Template_Data\js\jquery.flipster.js" />
@@ -344,6 +349,9 @@
     <Content Include="Template_Data\js\owl.carousel.js" />
     <Content Include="Template_Data\js\responsiveslides.min.js" />
     <Content Include="Views\Shared\_Visitor.cshtml" />
+    <Content Include="Views\Admin\BookingRequestList.cshtml" />
+    <Content Include="Views\Admin\BookingRequestDetails.cshtml" />
+    <Content Include="Views\Admin\DeleteBookingRequest.cshtml" />
     <None Include="Views\Visitor\index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -437,6 +445,9 @@
     <Content Include="Views\Visitor\_Contact.cshtml" />
     <Content Include="Views\Visitor\_Map.cshtml" />
     <Content Include="Views\Visitor\_FareCalculator.cshtml" />
+    <Content Include="Views\Visitor\_Gallery2.cshtml" />
+    <Content Include="Views\Visitor\_GalleryMeta2.cshtml" />
+    <Content Include="Views\Visitor\_BannerTop2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
