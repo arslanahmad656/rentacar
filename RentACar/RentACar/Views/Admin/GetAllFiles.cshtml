@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "GetAllFiles";
+    var files = (string[])ViewBag.Files;
+}
+
+<h2>GetAllFiles</h2>
+
+<div>
+    <p>Files</p>
+    @foreach (var file in files)
+    {
+        <p><b>File: </b>@file</p>
+    }
+</div>
+

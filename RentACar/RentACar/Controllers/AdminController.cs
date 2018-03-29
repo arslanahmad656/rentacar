@@ -830,5 +830,17 @@ namespace RentACar.Controllers
         }
 
         #endregion
+
+        #region others
+
+        public ActionResult GetAllFiles()
+        {
+            var serverPath = Server.MapPath(ApplicationWideData.StorageRootPath);
+            var files = Directory.GetFiles(serverPath);
+            ViewBag.Files = files;
+            return View();
+        }
+
+        #endregion
     }
 }

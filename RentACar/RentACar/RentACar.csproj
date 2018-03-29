@@ -350,6 +350,7 @@
     <Content Include="Views\Admin\BookingRequestList.cshtml" />
     <Content Include="Views\Admin\BookingRequestDetails.cshtml" />
     <Content Include="Views\Admin\DeleteBookingRequest.cshtml" />
+    <Content Include="Views\Admin\GetAllFiles.cshtml" />
     <None Include="Views\Visitor\index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
