@@ -55,7 +55,7 @@ namespace RentACar.Controllers
             var imagePaths = db.Images.Select(i => i.Path).ToList();
             ViewBag.ImagePaths = imagePaths;
 
-            return View();
+            return View("Index2");
         }
 
         #region BookingRequest
