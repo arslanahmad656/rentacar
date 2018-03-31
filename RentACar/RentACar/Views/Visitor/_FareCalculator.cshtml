@@ -116,11 +116,11 @@
                 </div>
 
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Request Date", data_resettable = "" } })
+                    @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Request Date", data_resettable = "", type = "date" } })
                 </div>
 
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Return Date", data_resettable = "" } })
+                    @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "inp-custom", placeholder = "Return Date", data_resettable = "", type = "date" } })
                 </div>
 
                 <div class="col-md-3">
@@ -151,8 +151,8 @@
 
                 <div class="col-md-3">
                     <select class="inp-custom" name="WithDriver" id="WithDriver">
-                        <option value="0" selected>No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" selected>Without Driver</option>
+                        <option value="1">With Driver</option>
                     </select>
                 </div>
 
